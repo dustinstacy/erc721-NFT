@@ -15,7 +15,6 @@ contract MoodNFTTest is Test, CodeConstants {
     }
 
     function testViewTokenURI() public {
-        console.log('testing....');
         vm.prank(USER);
         moodNFT.mintNFT();
         console.log(moodNFT.tokenURI(0));
