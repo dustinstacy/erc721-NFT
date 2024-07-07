@@ -1,0 +1,11 @@
+{
+    "name": "Fire Golem",
+    "description": "An adorable Fire Golem!",
+    "image": "ipfs://QmU116PqxD4egcZHkiZ7F7LcDynhfx5keujgQKsRDvvCcg",
+    "attributes": [
+        {
+            "trait_type": "hotness",
+            "value": 10000000
+        }
+    ]
+}

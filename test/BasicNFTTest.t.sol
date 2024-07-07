@@ -9,7 +9,7 @@ contract BasicNFTTest is Test {
     DeployBasicNFT public deployer;
     BasicNFT public basicNFT;
     address public USER = makeAddr('user');
-    string public constant GOLEM = 'ipfs://QmZBWXvTxruyW8qCKgiWLkPzyeGhKiYSayYmt7MvNtmuDr';
+    string public constant GOLEM = 'ipfs://QmP4LGGc5qz4UbqCZ24JD9ZA4RxeVhQazDuNbjXBQPWQaZ';
 
     function setUp() public {
         deployer = new DeployBasicNFT();
