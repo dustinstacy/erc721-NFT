@@ -29,4 +29,11 @@ contract BasicNFTTest is Test {
         assert(basicNFT.balanceOf(USER) == 1);
         assert(keccak256(abi.encodePacked(GOLEM)) == keccak256(abi.encodePacked(basicNFT.tokenURI(0))));
     }
+
+    function testTokenURIIsCorrect() public {
+        vm.prank(USER);
+        basicNFT.mintNFT(GOLEM);
+
+        assert(keccak256(abi.encodePacked(basicNFT.tokenURI(0))) == keccak256(abi.encodePacked(GOLEM)));
+    }
 }

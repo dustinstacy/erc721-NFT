@@ -8,8 +8,8 @@ contract MoodNFT is ERC721 {
     error MoodNFT__CantFlipMoodIfNotOwner();
 
     uint256 private tokenCounter;
-    string private sadSVGImageURI;
-    string private happySVGImageURI;
+    string private sadSVGURI;
+    string private happySVGURI;
 
     enum Mood {
         HAPPY,
@@ -18,24 +18,24 @@ contract MoodNFT is ERC721 {
 
     mapping(uint256 tokenId => Mood) private tokenIdToMood;
 
-    constructor(string memory _sadSVGImageURI, string memory _happySVGImageURI) ERC721('Mood', 'MD') {
+    constructor(string memory _sadSVGURI, string memory _happySVGURI) ERC721('Mood', 'MD') {
         tokenCounter = 0;
-        sadSVGImageURI = _sadSVGImageURI;
-        happySVGImageURI = _happySVGImageURI;
+        sadSVGURI = _sadSVGURI;
+        happySVGURI = _happySVGURI;
     }
 
     function mintNFT() public {
-        _safeMint(msg.sender, tokenCounter);
         tokenIdToMood[tokenCounter] = Mood.HAPPY;
+        _safeMint(msg.sender, tokenCounter);
         tokenCounter++;
     }
 
-    function flipMood(uint256 tokenId) public view {
+    function flipMood(uint256 tokenId) public {
         if (getApproved(tokenId) != msg.sender && ownerOf(tokenId) != msg.sender) {
             revert MoodNFT__CantFlipMoodIfNotOwner();
         }
         if (tokenIdToMood[tokenId] == Mood.HAPPY) {
-            tokenIdToMood[tokenId] == Mood.SAD;
+            tokenIdToMood[tokenId] = Mood.SAD;
         } else {
             tokenIdToMood[tokenId] == Mood.HAPPY;
         }
@@ -46,11 +46,10 @@ contract MoodNFT is ERC721 {
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        string memory imageURI;
-        if (tokenIdToMood[tokenId] == Mood.HAPPY) {
-            imageURI = happySVGImageURI;
-        } else {
-            imageURI = sadSVGImageURI;
+        string memory imageURI = happySVGURI;
+
+        if (tokenIdToMood[tokenId] == Mood.SAD) {
+            imageURI = sadSVGURI;
         }
 
         return
@@ -62,7 +61,7 @@ contract MoodNFT is ERC721 {
                             abi.encodePacked(
                                 '{"name":"',
                                 name(),
-                                '", "description": "An NFT that reflects the owners mood.", "attributes": [{"trait_type": "moodiness", "value": 100}]"image": "',
+                                '", "description": "An NFT that reflects the owners mood.", "attributes": [{"trait_type": "moodiness", "value": 100}], "image": "',
                                 imageURI,
                                 '"}'
                             )
